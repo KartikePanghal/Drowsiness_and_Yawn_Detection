@@ -77,14 +77,14 @@ saying = False
 COUNTER = 0
 
 print("-> Loading the predictor and detector...")
-#detector = dlib.get_frontal_face_detector()
+
 detector = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")    #Faster but less accurate
 predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 
 
 print("-> Starting Video Stream")
 vs = VideoStream(src=args["webcam"]).start()
-#vs= VideoStream(usePiCamera=True).start()       //For Raspberry Pi
+
 time.sleep(1.0)
 
 while True:
@@ -93,12 +93,12 @@ while True:
     frame = imutils.resize(frame, width=450)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    #rects = detector(gray, 0)
+    
     rects = detector.detectMultiScale(gray, scaleFactor=1.1, 
 		minNeighbors=5, minSize=(30, 30),
 		flags=cv2.CASCADE_SCALE_IMAGE)
 
-    #for rect in rects:
+   
     for (x, y, w, h) in rects:
         rect = dlib.rectangle(int(x), int(y), int(x + w),int(y + h))
         
